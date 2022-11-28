@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import Entry from './Entry';
 
 const AddressList = (props) => {
   const [addresses, setAddresses] = useState([]);
@@ -16,21 +18,7 @@ const AddressList = (props) => {
       ) : (
         <div>
           {addresses.map((entry) => {
-            return (
-              <div>
-                {entry.first_name +
-                  ' ' +
-                  entry.last_name +
-                  ', ' +
-                  entry.address +
-                  ', ' +
-                  entry.city +
-                  ', ' +
-                  entry.state +
-                  ', ' +
-                  entry.zip}
-              </div>
-            );
+            return <Entry entry={entry} />;
           })}
         </div>
       )}

@@ -7,13 +7,11 @@ import Header from './components/Header';
 function App() {
   const [addressList, setAddressList] = useState([]);
 
-  // Placeholder GET
-
   useEffect(() => {}, [addressList]);
 
   useEffect(() => {
     async function getAddressList() {
-      fetch('/list').then((res) =>
+      fetch('/list').then((res) => 
         res.json().then((data) => {
           console.log('data', data);
           setAddressList(data);
