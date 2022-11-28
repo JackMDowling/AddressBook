@@ -5,11 +5,9 @@ const Entry = (props) => {
   useEffect(() => {}, []);
 
   const handleDelete = (e, id) => {
-    e.preventDefault();
     console.log(id);
   };
   const handleEdit = (e, id) => {
-    e.preventDefault();
     console.log(id);
   };
 
@@ -26,10 +24,10 @@ const Entry = (props) => {
         state +
         ', ' +
         zip}
-      <button className="button" onClick={handleEdit}>
+      <button className="button" onClick={(e) => handleEdit(e, id)}>
         Edit
       </button>
-      <button className="button" onClick={handleDelete}>
+      <button className="button" onClick={(e) => handleDelete(e, id)}>
         Delete
       </button>
     </div>

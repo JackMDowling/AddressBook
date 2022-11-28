@@ -18,7 +18,7 @@ const AddressList = (props) => {
       ) : (
         <div>
           {addresses.map((entry) => {
-            return <Entry entry={entry} />;
+            return <Entry key={entry.id} entry={entry} />;
           })}
         </div>
       )}
