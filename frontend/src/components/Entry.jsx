@@ -12,7 +12,7 @@ const Entry = (props) => {
   };
 
   return (
-    <div>
+    <div className="addressEntry">
       {first_name +
         ' ' +
         last_name +
