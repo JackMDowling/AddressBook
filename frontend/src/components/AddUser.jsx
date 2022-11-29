@@ -9,9 +9,6 @@ const AddUser = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
 
-  // TODO Put this in an ENV file
-  const uspsID = '472NA0000197';
-
   useEffect(() => {}, []);
 
   const changeFName = () => {
