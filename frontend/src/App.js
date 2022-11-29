@@ -6,22 +6,31 @@ import Header from './components/Header';
 
 function App() {
   const [addressList, setAddressList] = useState([]);
+  const [renderToggle, setRenderToggle] = useState(1);
+
+  const toggleRender = () => {
+    setRenderToggle(renderToggle + 1);
+  };
+  async function getAddressList() {
+    fetch('/list').then((res) =>
+      res.json().then((data) => {
+        setAddressList(data);
+      })
+    );
+  }
 
   useEffect(() => {
-    async function getAddressList() {
-      fetch('/list').then((res) =>
-        res.json().then((data) => {
-          setAddressList(data);
-        })
-      );
-    }
     getAddressList();
   }, []);
+
+  useEffect(() => {
+    getAddressList();
+  }, [renderToggle]);
 
   return (
     <div className="App">
       <Header />
-      <AddUser />
+      <AddUser toggleRender={toggleRender} />
       <AddressList {...addressList} />
     </div>
   );

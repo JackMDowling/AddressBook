@@ -1,42 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AddUser = () => {
+const AddUser = (props) => {
   // Might not need these just send field value on Submit?
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [zipcode, setZipcode] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [address, setAddress] = useState('');
+
+  const { toggleRender } = props;
 
   useEffect(() => {}, []);
 
   const changeFName = () => {
     setFirstName(document.getElementById('fName').value);
-    console.log(firstName);
   };
   const changeLName = () => {
     setLastName(document.getElementById('lName').value);
-    console.log(lastName);
   };
   const changeZip = () => {
     setZipcode(document.getElementById('zip').value);
-    console.log(zipcode);
+  };
+  const changeAddress = () => {
+    setAddress(document.getElementById('address').value);
   };
 
   const handleAddUser = async () => {
-    console.log(firstName, lastName, zipcode);
-    if (!firstName || !lastName || !zipcode) {
-      console.log('i quit!');
+    if (!firstName || !lastName || !zipcode || !address) {
+      console.log('Incomplete Parameters');
       return;
     }
     axios
       .post('/addUser', {
         firstName,
         lastName,
+        address,
         zipcode,
       })
       .then((res) => {
+        toggleRender();
         console.log(res);
       })
       .catch((err) => {
@@ -57,6 +59,12 @@ const AddUser = () => {
         id="lName"
         placeholder="Last Name"
         onChange={changeLName}
+      />
+      <input
+        type="text"
+        id="address"
+        placeholder="Address"
+        onChange={changeAddress}
       />
       <input type="text" id="zip" placeholder="Zip Code" onChange={changeZip} />
       <button onClick={handleAddUser}>Add User</button>

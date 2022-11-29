@@ -40,18 +40,22 @@ def addUser():
     # To Do put in env
       USPS_ID = '472NA0000197'
       req_body = request.json
-      firstName, lastName, zipcode = itemgetter('firstName', 'lastName', 'zipcode')(req_body)
+      firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)
       xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'
       USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xmlString}'
       response = requests.post(url = USPS_URL)
-      print(response.content)
       root = ET.fromstring(response.content)
-    #   data = USPS_Res.json()
-    #   print(data)
-    #   conn = get_db_connection()
-    #   cur = conn.cursor()
-    #   cur.execute('')
-    return 'Hello'
+      city = root[0][1].text
+      state = root[0][2].text
+      conn = get_db_connection()
+      cur = conn.cursor()
+      cur.execute('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
+            'VALUES (%s, %s, %s, %s, %s, %s)',
+            (firstName, lastName, address, city, state, zipcode))
+      conn.commit()
+      cur.close()
+      conn.close()
+    return 'Success'
     
 
 if __name__ == '__main__':
