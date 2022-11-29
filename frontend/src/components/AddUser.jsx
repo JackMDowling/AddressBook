@@ -30,17 +30,18 @@ const AddUser = () => {
       console.log('i quit!');
       return;
     }
-    const xmlString = `<CityStateLookupRequest USERID=${uspsID}><ZipCode ID='0'><Zip5>${zipcode}</Zip5></ZipCode></CityStateLookupRequest>`;
-    const uspsURL = `https://production.shippingapis.com/ShippingAPI.dll&ampAPI= CityStateLookup&XML=${xmlString}`;
-    console.log(uspsURL);
-    axios.post(uspsURL).then((res) => {
-      console.log(res);
-    });
-    // axios.post('/addUser', {
-    //   firstName,
-    //   lastName,
-    //   zipcode,
-    // });
+    axios
+      .post('/addUser', {
+        firstName,
+        lastName,
+        zipcode,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
