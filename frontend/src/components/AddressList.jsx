@@ -5,7 +5,6 @@ import Entry from './Entry';
 const AddressList = (props) => {
   const [addresses, setAddresses] = useState([]);
   const addressList = Object.values(props);
-  console.log(addresses);
 
   useEffect(() => {
     setAddresses(addressList);

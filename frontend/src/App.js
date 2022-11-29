@@ -20,9 +20,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>React and flask</h1>
-      </header>
       <Header />
       <AddUser />
       <AddressList {...addressList} />
