@@ -45,7 +45,7 @@ def addUser():
       response = requests.post(url = USPS_URL)
       root = ET.fromstring(response.content)
       if root[0][0].tag == 'Error':
-        return 'Request Failed', 500
+        return 'Request Failed', 400
       city = root[0][1].text.title()
       state = root[0][2].text
       conn = get_db_connection()
