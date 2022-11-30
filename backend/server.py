@@ -72,6 +72,19 @@ def deleteEntry():
 
   return 'Successfully Deleted'
 
+@app.route('/editEntry', methods=['POST'])
+def editEntry():
+    req_body = request.json
+    firstName, lastName, address, zipcode, city, state, id = itemgetter('firstName', 'lastName', 'address', 'zipcode', 'city', 'state', 'id')(req_body)
+    print(firstName, lastName, address, zipcode, city, state)
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('UPDATE addresses SET first_name = %s, last_name =%s, address =%s, city =%s, state =%s, zip =%s WHERE id = %s;',
+            (firstName, lastName, address, city, state, zipcode, id))
+    conn.commit()
+    cur.close()
+    conn.close()
+    return 'Successfully Updated'
 
 if __name__ == '__main__':
     app.run(debug=True)
