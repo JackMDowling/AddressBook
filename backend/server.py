@@ -28,7 +28,6 @@ def index():
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
     cur.execute('SELECT * FROM addresses;')
     addresses = cur.fetchall()
-    print(addresses)
     cur.close()
     conn.close()
     return addresses
@@ -45,6 +44,8 @@ def addUser():
       USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xmlString}'
       response = requests.post(url = USPS_URL)
       root = ET.fromstring(response.content)
+      if root[0][0].tag == 'Error':
+        return 'Request Failed', 500
       city = root[0][1].text.title()
       state = root[0][2].text
       conn = get_db_connection()
@@ -61,7 +62,6 @@ def addUser():
 @app.route('/deleteEntry', methods=['POST'])
 def deleteEntry():
   req_body = request.json
-  print(req_body['id'])
   id = req_body['id']
   conn = get_db_connection()
   cur = conn.cursor()

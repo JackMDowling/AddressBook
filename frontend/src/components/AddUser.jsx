@@ -3,7 +3,6 @@ import axios from 'axios';
 import { FunctionContext } from '../App';
 
 const AddUser = (props) => {
-  // Might not need these just send field value on Submit?
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [zipcode, setZipcode] = useState('');
