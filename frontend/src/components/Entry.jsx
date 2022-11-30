@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { FunctionContext } from '../App';
 import axios from 'axios';
 import '../styles/Modal.css';
-import Modal from './Modal';
+import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
 
 const Entry = (props) => {
   const [modal, setModal] = useState(false);
@@ -33,9 +34,6 @@ const Entry = (props) => {
         console.log(err);
       });
   };
-  const handleEdit = (e, id) => {
-    console.log(id);
-  };
 
   return (
     <div className="addressEntry">
@@ -55,8 +53,22 @@ const Entry = (props) => {
       </div>
       {modal && (
         <>
-          <Modal
-            props={[toggleModal, handleDelete, id, modalType, handleEdit]}
+          <DeleteModal props={[toggleModal, handleDelete, id]} />
+        </>
+      )}
+      {modal && modalType === 'edit' && (
+        <>
+          <EditModal
+            props={[
+              toggleModal,
+              id,
+              first_name,
+              last_name,
+              address,
+              city,
+              state,
+              zip,
+            ]}
           />
         </>
       )}
