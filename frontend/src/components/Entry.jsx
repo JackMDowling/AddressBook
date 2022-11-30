@@ -2,18 +2,25 @@ import React, { useState, useContext } from 'react';
 import { FunctionContext } from '../App';
 import axios from 'axios';
 import '../styles/Modal.css';
+import Modal from './Modal';
 
 const Entry = (props) => {
   const [modal, setModal] = useState(false);
+  const [modalType, setModalType] = useState('');
   const { id, first_name, last_name, address, city, state, zip } = props.entry;
   const toggleRender = useContext(FunctionContext);
 
-  const toggleModal = () => {
+  const toggleModal = (e) => {
+    if (e.target.className === 'deleteButton') {
+      setModalType('delete');
+    }
+    if (e.target.className === 'editButton') {
+      setModalType('edit');
+    }
     setModal(!modal);
   };
 
   const handleDelete = (e, id) => {
-    console.log(id);
     axios
       .post('/deleteEntry', {
         id,
@@ -32,14 +39,14 @@ const Entry = (props) => {
 
   return (
     <div className="addressEntry">
-      <p style={{ display: 'flex' }}>
+      <div style={{ display: 'flex' }}>
         <div style={{ width: '10em' }}>{first_name + ' ' + last_name}</div>
         <div style={{ color: '102,100,100' }}>
           {address + ', ' + city + ', ' + state + ', ' + zip}
         </div>
-      </p>
+      </div>
       <div className="buttonContainer">
-        <button className="editButton" onClick={(e) => handleEdit(e, id)}>
+        <button className="editButton" onClick={toggleModal}>
           Edit
         </button>
         <button className="deleteButton" onClick={toggleModal}>
@@ -48,22 +55,9 @@ const Entry = (props) => {
       </div>
       {modal && (
         <>
-          <div className="modal">
-            <div onClick={toggleModal} className="overlay"></div>
-            <div className="modal-content">
-              <h2>Are You Sure?</h2>
-              <p>If you delete this entry you won't be able to undo it!</p>
-              <button
-                className="confirmButton"
-                onClick={(e) => handleDelete(e, id)}
-              >
-                Yes, I'm Sure!
-              </button>
-              <button className="exitButton" onClick={toggleModal}>
-                No, Wait!
-              </button>
-            </div>
-          </div>
+          <Modal
+            props={[toggleModal, handleDelete, id, modalType, handleEdit]}
+          />
         </>
       )}
     </div>
