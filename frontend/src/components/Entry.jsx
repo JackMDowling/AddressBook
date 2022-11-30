@@ -32,17 +32,19 @@ const Entry = (props) => {
 
   return (
     <div className="addressEntry">
-      {first_name +
-        ' ' +
-        last_name +
-        ', ' +
-        address +
-        ', ' +
-        city +
-        ', ' +
-        state +
-        ', ' +
-        zip}
+      <p>
+        {first_name +
+          ' ' +
+          last_name +
+          ', ' +
+          address +
+          ', ' +
+          city +
+          ', ' +
+          state +
+          ', ' +
+          zip}
+      </p>
       <div className="buttonContainer">
         <button className="editButton" onClick={(e) => handleEdit(e, id)}>
           Edit

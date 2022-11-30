@@ -28,6 +28,7 @@
 .entryContainer {
   display: flex;
   flex-direction: column;
+  width: 110vh;
 }
 
 .addressEntry {
@@ -41,14 +42,15 @@
   padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.829);
   transition: background-color 500ms ease-out 20ms;
+  font-size: medium;
 }
 .addressEntry:hover {
-  background-color: #cdcdcd;
+  background-color: #e5e5e5;
 }
 
 .buttonContainer {
-  display: flex;
-  justify-content: flex-end;
+  display: flow-root;
+  align-self: center;
 }
 
 .editButton {
