@@ -45,7 +45,7 @@ def addUser():
       USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xmlString}'
       response = requests.post(url = USPS_URL)
       root = ET.fromstring(response.content)
-      city = root[0][1].text
+      city = root[0][1].text.title()
       state = root[0][2].text
       conn = get_db_connection()
       cur = conn.cursor()

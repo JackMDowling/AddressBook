@@ -9,7 +9,7 @@ const AddUser = (props) => {
   const [zipcode, setZipcode] = useState('');
   const [address, setAddress] = useState('');
 
-  const toggleRender = useContext(FunctionContext)
+  const toggleRender = useContext(FunctionContext);
 
   useEffect(() => {}, []);
 
@@ -39,10 +39,15 @@ const AddUser = (props) => {
         zipcode,
       })
       .then((res) => {
+        setFirstName('');
+        setLastName('');
+        setAddress('');
+        setZipcode('');
         toggleRender();
         console.log(res);
       })
       .catch((err) => {
+        alert('Check to make sure the zipcode is correct');
         console.log(err);
       });
   };
@@ -53,21 +58,30 @@ const AddUser = (props) => {
         type="text"
         id="fName"
         placeholder="First Name"
+        value={firstName}
         onChange={changeFName}
       />
       <input
         type="text"
         id="lName"
         placeholder="Last Name"
+        value={lastName}
         onChange={changeLName}
       />
       <input
         type="text"
         id="address"
         placeholder="Address"
+        value={address}
         onChange={changeAddress}
       />
-      <input type="text" id="zip" placeholder="Zip Code" onChange={changeZip} />
+      <input
+        type="text"
+        id="zip"
+        placeholder="Zip Code"
+        onChange={changeZip}
+        value={zipcode}
+      />
       <button onClick={handleAddUser}>Add User</button>
     </div>
   );

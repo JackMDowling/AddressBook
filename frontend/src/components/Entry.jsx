@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { FunctionContext } from '../App';
 import axios from 'axios';
-import './Modal.css';
+import '../styles/Modal.css';
 
 const Entry = (props) => {
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [modal, setModal] = useState(false);
   const { id, first_name, last_name, address, city, state, zip } = props.entry;
   const toggleRender = useContext(FunctionContext);
 
   const toggleModal = () => {
-    setConfirmDelete(!confirmDelete);
+    setModal(!modal);
   };
 
   const handleDelete = (e, id) => {
@@ -51,7 +51,7 @@ const Entry = (props) => {
         Delete
       </button>
 
-      {confirmDelete && (
+      {modal && (
         <>
           <div className="modal">
             <div onClick={toggleModal} className="overlay"></div>
