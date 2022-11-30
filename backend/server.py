@@ -56,7 +56,23 @@ def addUser():
       cur.close()
       conn.close()
     return 'Success'
-    
+
+
+@app.route('/deleteEntry', methods=['POST'])
+def deleteEntry():
+  req_body = request.json
+  print(req_body['id'])
+  id = req_body['id']
+  conn = get_db_connection()
+  cur = conn.cursor()
+  cur.execute('DELETE FROM addresses WHERE id = %s;',
+            [id])
+  conn.commit()
+  cur.close()
+  conn.close()
+
+  return 'Successfully Deleted'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
