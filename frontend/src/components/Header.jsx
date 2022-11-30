@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const Header = () => {
-
-  useEffect(() => {}, []);
-
-  return <div>Place Holder for Header</div>;
+  return <h3>The Book of Names</h3>;
 };
 
 export default Header;
