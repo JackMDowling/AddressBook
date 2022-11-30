@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FunctionContext } from '../App';
 import axios from 'axios';
 import './Modal.css';
@@ -7,7 +7,6 @@ const Entry = (props) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { id, first_name, last_name, address, city, state, zip } = props.entry;
   const toggleRender = useContext(FunctionContext);
-  useEffect(() => {}, []);
 
   const toggleModal = () => {
     setConfirmDelete(!confirmDelete);
