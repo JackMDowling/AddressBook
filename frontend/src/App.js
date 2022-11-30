@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import './App.css';
 import AddUser from './components/AddUser';
 import AddressList from './components/AddressList';
 import Header from './components/Header';
+
+export const FunctionContext = createContext();
 
 function App() {
   const [addressList, setAddressList] = useState([]);
@@ -11,6 +13,7 @@ function App() {
   const toggleRender = () => {
     setRenderToggle(renderToggle + 1);
   };
+
   async function getAddressList() {
     fetch('/list').then((res) =>
       res.json().then((data) => {
@@ -30,8 +33,10 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AddUser toggleRender={toggleRender} />
-      <AddressList {...addressList} />
+      <FunctionContext.Provider value={toggleRender}>
+        <AddUser />
+        <AddressList {...addressList} />
+      </FunctionContext.Provider>
     </div>
   );
 }

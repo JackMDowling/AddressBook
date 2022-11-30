@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { FunctionContext } from '../App';
 
 const AddUser = (props) => {
   // Might not need these just send field value on Submit?
@@ -8,7 +9,7 @@ const AddUser = (props) => {
   const [zipcode, setZipcode] = useState('');
   const [address, setAddress] = useState('');
 
-  const { toggleRender } = props;
+  const toggleRender = useContext(FunctionContext)
 
   useEffect(() => {}, []);
 
