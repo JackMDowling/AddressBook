@@ -8,7 +8,6 @@ import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 
-
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
                             database='address',

@@ -5,18 +5,133 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: black;
 }
 
 .App-header {
   background-color: whitesmoke;
-  min-height: 50vh;
+  min-height: 0vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
+}
+
+.addUserBar {
+  margin: 1em;
+}
+
+.entryContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.addressEntry {
+  border: solid black 1px;
+  font-family: sans-serif;
+  margin: 3px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.829);
+  transition: background-color 500ms ease-out 20ms;
+}
+.addressEntry:hover {
+  background-color: #cdcdcd;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editButton {
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans',
+    sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px 0.8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+  transition: background-color 1s ease-out 50ms;
+}
+
+.editButton:hover,
+.editButton:focus {
+  background-color: #07c;
+}
+
+.editButton:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.editButton:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}
+
+.deleteButton {
+  background-color: #fc2626;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans',
+    sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px 0.8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+  transition: background-color 1s ease-out 50ms;
+}
+
+.deleteButton:hover,
+.deleteButton:focus {
+  background-color: #cd1616;
+}
+
+.deleteButton:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.deleteButton:active {
+  background-color: #bd0000;
+  box-shadow: none;
 }

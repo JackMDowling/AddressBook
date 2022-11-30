@@ -43,14 +43,14 @@ const Entry = (props) => {
         state +
         ', ' +
         zip}
-
-      <button className="button" onClick={(e) => handleEdit(e, id)}>
-        Edit
-      </button>
-      <button className="button" onClick={toggleModal}>
-        Delete
-      </button>
-
+      <div className="buttonContainer">
+        <button className="editButton" onClick={(e) => handleEdit(e, id)}>
+          Edit
+        </button>
+        <button className="deleteButton" onClick={toggleModal}>
+          Delete
+        </button>
+      </div>
       {modal && (
         <>
           <div className="modal">
