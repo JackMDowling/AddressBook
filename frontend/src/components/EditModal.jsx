@@ -66,12 +66,12 @@ const EditModal = (props) => {
       .then((res) => {
         console.log(res);
         toggleRender();
-        return true;
       })
       .catch((err) => {
         console.log(err);
         return false;
       });
+    return true;
   };
 
   const changeFName = () => {
@@ -162,7 +162,9 @@ const EditModal = (props) => {
               addressState,
               stateCode
             );
-            if (canClose) toggleModal(e);
+            if (canClose) {
+              toggleModal(e);
+            }
           }}
         >
           Save
