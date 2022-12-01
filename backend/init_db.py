@@ -10,10 +10,11 @@ def init():
   
   # Open a cursor to perform database operations
   cur = conn.cursor()
+
   
-  # Execute a command: this creates a new table
-  cur.execute('DROP TABLE IF EXISTS addresses;')
-  cur.execute('CREATE TABLE addresses (id serial PRIMARY KEY,'
+#   Execute a command: this creates a new table
+#   cur.execute('DROP TABLE IF EXISTS addresses;')
+  cur.execute('CREATE TABLE IF NOT EXISTS addresses (id serial PRIMARY KEY,'
                                    'first_name varchar (50) NOT NULL,'
                                    'last_name varchar (50) NOT NULL,'
                                    'address varchar (50) NOT NULL,'
