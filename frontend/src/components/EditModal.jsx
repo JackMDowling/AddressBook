@@ -94,7 +94,7 @@ const EditModal = (props) => {
             id="fNameModal"
             placeholder="First Name"
             value={firstName}
-            maxLength="20"
+            maxLength="15"
             onChange={changeInput}
           />
           <input
@@ -102,7 +102,7 @@ const EditModal = (props) => {
             id="lNameModal"
             placeholder="Last Name"
             value={lastName}
-            maxLength="20"
+            maxLength="15"
             onChange={changeInput}
           />
           <input

@@ -38,7 +38,7 @@ const Entry = (props) => {
   return (
     <div className="addressEntry">
       <div style={{ display: 'flex' }}>
-        <div style={{ width: '10em' }}>{first_name + ' ' + last_name}</div>
+        <div style={{ width: '15em' }}>{first_name + ' ' + last_name}</div>
         <div style={{ color: '102,100,100' }}>
           {address + ', ' + city + ', ' + state + ', ' + zip}
         </div>

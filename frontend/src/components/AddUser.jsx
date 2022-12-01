@@ -52,7 +52,7 @@ const AddUser = (props) => {
         id="fName"
         placeholder="First Name"
         value={firstName}
-        maxLength="20"
+        maxLength="15"
         onChange={changeInput}
       />
       <input
@@ -60,7 +60,7 @@ const AddUser = (props) => {
         id="lName"
         placeholder="Last Name"
         value={lastName}
-        maxLength="20"
+        maxLength="15"
         onChange={changeInput}
       />
       <input
