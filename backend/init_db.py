@@ -2,10 +2,10 @@ import os
 import psycopg2
 
 conn = psycopg2.connect(
-        host="localhost",
-        database="addresses",
-        user="main",
-        password="password")
+              host="host.docker.internal",
+              database="docker-postgres",
+              user="postgres",
+              password="password")
 
 # Open a cursor to perform database operations
 cur = conn.cursor()

@@ -1,6 +1,4 @@
-DROP DATABASE IF EXISTS docker-postgres;
-
-CREATE DATABASE docker-postgres;
+\i schema.sql
 
 \c docker-postgres postgres
 

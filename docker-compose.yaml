@@ -1,19 +1,20 @@
 version: '3.9'
 services:
   db:
-    image: postgres
+    image: address-postgres-db
     container_name: address-postgres-db
     ports:
-      - 5432:5432
+      - '5432:5432'
+    user: postgres
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: main
-      POSTGRES_DB: addresses
-    # build:
-    #   context: .
-    #   dockerfile: mongo.Dockerfile
+      # POSTGRES_USER: main
+      POSTGRES_DB: docker-postgres
+    build:
+      context: .
+      dockerfile: backend/databse/Dockerfile
     volumes:
-      - ./pgdata:/data/db
+      - .:/docker-entrypoint-initdb.d
 
   flask:
     image: python-backend
@@ -33,8 +34,6 @@ services:
       - flask
     ports:
       - 3000:3000
-    links:
-      - backend
     build:
       context: .
       dockerfile: frontend/Dockerfile

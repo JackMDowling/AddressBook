@@ -11,9 +11,9 @@ app = Flask(__name__)
 
 def get_db_connection():
   conn = psycopg2.connect(
-              host="localhost",
-              database="addresses",
-              user="main",
+              host="host.docker.internal",
+              database="docker-postgres",
+              user="postgres",
               password="password")
   return conn
 
