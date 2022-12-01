@@ -85,7 +85,7 @@ const AddUser = (props) => {
         onChange={changeZip}
         value={zipcode}
       />
-      <button onClick={handleAddUser}>Add User</button>
+      <button className='addUserButton' onClick={handleAddUser}>Add User</button>
     </div>
   );
 };
