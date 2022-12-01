@@ -25,7 +25,7 @@ def home():
 def index():
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    cur.execute('SELECT * FROM addresses;')
+    cur.execute('SELECT * FROM addresses ORDER BY id ASC;')
     addresses = cur.fetchall()
     cur.close()
     conn.close()
