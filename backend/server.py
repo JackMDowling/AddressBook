@@ -5,6 +5,7 @@ import requests
 from flask import Flask, request
 from operator import itemgetter
 import xml.etree.ElementTree as ET
+from decouple import config
 
 app = Flask(__name__)
 
@@ -35,8 +36,7 @@ def index():
 def addUser():
     if request.method == 'POST':
     #   USPS_ID = os.environ.get("USPS_ID")
-    # To Do put in env
-      USPS_ID = '472NA0000197'
+      USPS_ID = os.environ.get('USPS_ID')
       req_body = request.json
       firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)
       xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'
