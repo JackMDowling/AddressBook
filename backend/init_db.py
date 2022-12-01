@@ -21,28 +21,6 @@ cur.execute('CREATE TABLE addresses (id serial PRIMARY KEY,'
                                  'zip integer NOT NULL);'
                                  )
 
-# Insert data into the table
-
-cur.execute('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
-            'VALUES (%s, %s, %s, %s, %s, %s)',
-            ('William',
-             'Faulkner',
-             '1234 Trinity Ave.',
-             'New Albany',
-             'MI',
-             38628)
-            )
-
-cur.execute('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
-            'VALUES (%s, %s, %s, %s, %s, %s)',
-            ('Anne',
-             'Rice',
-             '1234 Dracula Lane',
-             'New Orleans',
-             'LA',
-             70726)
-            )
-
 
 conn.commit()
 
