@@ -10,11 +10,12 @@ from decouple import config
 app = Flask(__name__)
 
 def get_db_connection():
-    conn = psycopg2.connect(host='localhost',
-                            database='address',
-                            user=os.environ['DB_USERNAME'],
-                            password=os.environ['DB_PASSWORD'])
-    return conn
+  conn = psycopg2.connect(
+              host="localhost",
+              database="addresses",
+              user="main",
+              password="password")
+  return conn
 
 @app.route('/')
 def home():
@@ -35,8 +36,8 @@ def index():
 @app.route('/addUser', methods=['GET', 'POST'])
 def addUser():
     if request.method == 'POST':
-    #   USPS_ID = os.environ.get("USPS_ID")
-      USPS_ID = os.environ.get('USPS_ID')
+      # USPS_ID = os.environ.get('USPS_ID')
+      USPS_ID='472NA0000197'
       req_body = request.json
       firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)
       xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'

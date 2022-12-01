@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    container_name: address-postgres-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: main
+      POSTGRES_DB: addresses
+    # build:
+    #   context: .
+    #   dockerfile: mongo.Dockerfile
+    volumes:
+      - ./pgdata:/data/db
+
+  flask:
+    image: python-backend
+    container_name: python-backend
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+
+  react:
+    image: react-address
+    container_name: react-address
+    depends_on:
+      - flask
+    ports:
+      - 3000:3000
+    links:
+      - backend
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
