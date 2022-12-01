@@ -12,16 +12,10 @@ const AddUser = (props) => {
 
   useEffect(() => {}, []);
 
-  const changeFName = () => {
+  const changeInput = () => {
     setFirstName(document.getElementById('fName').value);
-  };
-  const changeLName = () => {
     setLastName(document.getElementById('lName').value);
-  };
-  const changeZip = () => {
     setZipcode(document.getElementById('zip').value);
-  };
-  const changeAddress = () => {
     setAddress(document.getElementById('address').value);
   };
 
@@ -59,7 +53,7 @@ const AddUser = (props) => {
         placeholder="First Name"
         value={firstName}
         maxLength="20"
-        onChange={changeFName}
+        onChange={changeInput}
       />
       <input
         type="text"
@@ -67,7 +61,7 @@ const AddUser = (props) => {
         placeholder="Last Name"
         value={lastName}
         maxLength="20"
-        onChange={changeLName}
+        onChange={changeInput}
       />
       <input
         type="text"
@@ -75,17 +69,19 @@ const AddUser = (props) => {
         placeholder="Address"
         value={address}
         maxLength="30"
-        onChange={changeAddress}
+        onChange={changeInput}
       />
       <input
         type="text"
         id="zip"
         placeholder="Zip Code"
         maxLength="5"
-        onChange={changeZip}
+        onChange={changeInput}
         value={zipcode}
       />
-      <button className='addUserButton' onClick={handleAddUser}>Add User</button>
+      <button className="addUserButton" onClick={handleAddUser}>
+        Add User
+      </button>
     </div>
   );
 };

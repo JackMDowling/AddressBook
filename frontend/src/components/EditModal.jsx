@@ -74,25 +74,14 @@ const EditModal = (props) => {
     return true;
   };
 
-  const changeFName = () => {
+  const changeInput = () => {
     setFirstName(document.getElementById('fNameModal').value);
-    console.log(firstName);
-  };
-  const changeLName = () => {
     setLastName(document.getElementById('lNameModal').value);
-  };
-  const changeZip = () => {
     setZipcode(document.getElementById('zipModal').value);
-  };
-  const changeCity = () => {
     setCity(document.getElementById('cityModal').value);
-  };
-  const changeState = () => {
+    setAddress(document.getElementById('addressModal').value);
     let stateText = document.getElementById('stateModal').value.toUpperCase();
     setStateCode(stateText);
-  };
-  const changeAddress = () => {
-    setAddress(document.getElementById('addressModal').value);
   };
   return (
     <div className="modal">
@@ -106,7 +95,7 @@ const EditModal = (props) => {
             placeholder="First Name"
             value={firstName}
             maxLength="20"
-            onChange={changeFName}
+            onChange={changeInput}
           />
           <input
             type="text"
@@ -114,7 +103,7 @@ const EditModal = (props) => {
             placeholder="Last Name"
             value={lastName}
             maxLength="20"
-            onChange={changeLName}
+            onChange={changeInput}
           />
           <input
             type="text"
@@ -122,14 +111,14 @@ const EditModal = (props) => {
             placeholder="Address"
             value={addressState}
             maxLength="30"
-            onChange={changeAddress}
+            onChange={changeInput}
           />
           <input
             type="text"
             id="cityModal"
             placeholder="City"
             maxLength="20"
-            onChange={changeCity}
+            onChange={changeInput}
             value={cityState}
           />
           <input
@@ -137,7 +126,7 @@ const EditModal = (props) => {
             id="stateModal"
             placeholder="State"
             maxLength="2"
-            onChange={changeState}
+            onChange={changeInput}
             value={stateCode}
           />
           <input
@@ -145,7 +134,7 @@ const EditModal = (props) => {
             id="zipModal"
             placeholder="Zip Code"
             maxLength="5"
-            onChange={changeZip}
+            onChange={changeInput}
             value={zipCodeState}
           />
         </div>
