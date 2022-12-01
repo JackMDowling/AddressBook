@@ -138,3 +138,8 @@
   background-color: #bd0000;
   box-shadow: none;
 }
+
+.editInputs {
+  display: flex;
+  flex-direction: column;
+}

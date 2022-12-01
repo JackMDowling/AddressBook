@@ -149,6 +149,7 @@ const EditModal = (props) => {
             value={zipCodeState}
           />
         </div>
+        <br />
         <button
           className="confirmButton"
           onClick={(e) => {
