@@ -14,7 +14,7 @@ const AddressList = (props) => {
   return (
     <div>
       {!addresses?.length ? (
-        <p>Loading...</p>
+        <p>Looks like you don't have any addresses yet</p>
       ) : (
         <div className="entryContainer">
           {addresses.map((entry) => {
