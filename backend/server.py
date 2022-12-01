@@ -6,12 +6,15 @@ from flask import Flask, request
 from operator import itemgetter
 import xml.etree.ElementTree as ET
 from decouple import config
+import init_db
 
 app = Flask(__name__)
 
+init_db.init()
+
 def get_db_connection():
   conn = psycopg2.connect(
-              host="host.docker.internal",
+              host="db",
               database="docker-postgres",
               user="postgres",
               password="password")

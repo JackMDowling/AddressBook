@@ -16,16 +16,6 @@ services:
     volumes:
       - .:/docker-entrypoint-initdb.d
 
-  flask:
-    image: python-backend
-    container_name: python-backend
-    depends_on:
-      - db
-    ports:
-      - 5000:5000
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
 
   react:
     image: react-address
@@ -37,3 +27,16 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+
+  flask:
+    image: python-backend
+    container_name: python-backend
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    links:
+      - 'db:database'
