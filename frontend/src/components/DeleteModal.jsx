@@ -11,12 +11,12 @@ const DeleteModal = (props) => {
           <h2>Are You Sure?</h2>
           <p>If you delete this entry you won't be able to undo it!</p>
           <button
-            className="confirmButton"
+            className="deleteButton"
             onClick={(e) => handleDelete(e, id)}
           >
             Yes, I'm Sure!
           </button>
-          <button className="exitButton" onClick={toggleModal}>
+          <button className="editButton" onClick={toggleModal}>
             No, Wait!
           </button>
         </div>

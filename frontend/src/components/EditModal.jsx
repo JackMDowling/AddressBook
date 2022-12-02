@@ -38,7 +38,7 @@ const EditModal = (props) => {
     zipCodeState,
     cityState,
     addressState,
-    stateCode,
+    stateCode
   ) => {
     if (
       !firstName ||
@@ -138,7 +138,7 @@ const EditModal = (props) => {
         </div>
         <br />
         <button
-          className="confirmButton"
+          className="addUserButton"
           onClick={(e) => {
             const canClose = handleEdit(
               id,
@@ -156,7 +156,7 @@ const EditModal = (props) => {
         >
           Save
         </button>
-        <button className="exitButton" onClick={toggleModal}>
+        <button className="editButton" onClick={toggleModal}>
           Cancel
         </button>
       </div>
