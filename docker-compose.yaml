@@ -1,14 +1,13 @@
 version: '3.9'
 services:
   db:
-    image: address-postgres-db
+    image: /addressbook/db 
     container_name: address-postgres-db
     ports:
       - '5432:5432'
     user: postgres
     environment:
       POSTGRES_PASSWORD: password
-      # POSTGRES_USER: main
       POSTGRES_DB: docker-postgres
     build:
       context: .
@@ -18,7 +17,7 @@ services:
 
 
   react:
-    image: react-address
+    image: /addressbook/frontend
     container_name: react-address
     depends_on:
       - flask
@@ -31,7 +30,7 @@ services:
       - 'flask:server'
 
   flask:
-    image: python-backend
+    image: /addressbook/server
     container_name: python-backend
     depends_on:
       - db
