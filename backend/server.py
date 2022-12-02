@@ -12,8 +12,8 @@ app = Flask(__name__)
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
                             database='address',
-                            user=os.environ['DB_USERNAME'],
-                            password=os.environ['DB_PASSWORD'])
+                            user=os.environ.get('PG_USERNAME'),
+                            password=os.environ.get('PG_PASSWORD'))
     return conn
 
 @app.route('/')
@@ -35,7 +35,6 @@ def index():
 @app.route('/addUser', methods=['GET', 'POST'])
 def addUser():
     if request.method == 'POST':
-    #   USPS_ID = os.environ.get("USPS_ID")
       USPS_ID = os.environ.get('USPS_ID')
       req_body = request.json
       firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)

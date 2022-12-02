@@ -2,7 +2,6 @@ import React, { useState, useEffect, createContext } from 'react';
 import './styles/App.css';
 import AddUser from './components/AddUser';
 import AddressList from './components/AddressList';
-import Header from './components/Header';
 
 export const FunctionContext = createContext();
 
@@ -32,7 +31,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <h3>The Book of Names</h3>
       <FunctionContext.Provider value={toggleRender}>
         <AddUser />
         <AddressList {...addressList} />

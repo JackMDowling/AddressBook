@@ -32,7 +32,6 @@ const EditModal = (props) => {
   }, []);
 
   const handleEdit = (
-    e,
     id,
     firstName,
     lastName,
@@ -40,7 +39,6 @@ const EditModal = (props) => {
     cityState,
     addressState,
     stateCode,
-    toggleModal
   ) => {
     if (
       !firstName ||
@@ -143,7 +141,6 @@ const EditModal = (props) => {
           className="confirmButton"
           onClick={(e) => {
             const canClose = handleEdit(
-              e,
               id,
               firstName,
               lastName,

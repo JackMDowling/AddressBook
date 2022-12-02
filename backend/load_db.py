@@ -10,8 +10,6 @@ conn = psycopg2.connect(
 # Open a cursor to perform database operations
 cur = conn.cursor()
 
-# Execute a command: this creates a new table
-
 # Insert data into the table
 
 cur.execute('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
