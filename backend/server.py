@@ -32,6 +32,15 @@ def home():
     return 'Homepage'
 
 ## Initital select all for DB
+def generateXml(zipcode, USPS_ID):
+    root = ET.Element('CityStateLookupRequest')
+    root.set('USERID', USPS_ID)
+    zipCode = ET.SubElement(root, 'ZipCode')
+    zipCode.set('ID', '0')
+    zip5 = ET.SubElement(zipCode, 'Zip5')
+    zip5.text = zipcode
+    xml_string = ET.tostring(root).decode()
+    return xml_string
 
 @app.route('/list')
 def index():
@@ -46,17 +55,10 @@ def index():
 
 @app.route('/addUser', methods=['POST'])
 def addUser():
-  
+    global generateXml
     USPS_ID = os.environ.get('USPS_ID')
     firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(request.json)
-    # Build xml to use with API
-    root = ET.Element('CityStateLookupRequest')
-    root.set('USERID', USPS_ID)
-    zipCode = ET.SubElement(root, 'ZipCode')
-    zipCode.set('ID', '0')
-    zip5 = ET.SubElement(zipCode, 'Zip5')
-    zip5.text = zipcode
-    xml_string = ET.tostring(root).decode()
+    xml_string = generateXml(zipcode, USPS_ID)
     
     USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xml_string}'
     response = requests.post(url = USPS_URL)
