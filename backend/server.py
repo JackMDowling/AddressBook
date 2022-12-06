@@ -37,43 +37,45 @@ def home():
 def index():
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    cur.execute('SELECT * FROM addresses ORDER BY id ASC;')
+    query = cur.mogrify('SELECT * FROM addresses ORDER BY id ASC;')
+    cur.execute(query)
     addresses = cur.fetchall()
     cur.close()
     release_db_connection(conn)
     return addresses
 
-@app.route('/addUser', methods=['GET', 'POST'])
+@app.route('/addUser', methods=['POST'])
 def addUser():
-    if request.method == 'POST':
-      USPS_ID = os.environ.get('USPS_ID')
-      firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(request.json)
-
-      # Build xml to use with API
-
-      root = ET.Element('CityStateLookupRequest')
-      root.set('USERID', USPS_ID)
-      zipCode = ET.SubElement(root, 'ZipCode')
-      zipCode.set('ID', '0')
-      zip5 = ET.SubElement(zipCode, 'Zip5')
-      zip5.text = zipcode
-      xml_string = ET.tostring(root).decode()
-      
-      USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xml_string}'
-      response = requests.post(url = USPS_URL)
-      root = ET.fromstring(response.content)
-      if root[0][0].tag == 'Error':
-        return 'Request Failed', 400
-      city = root[0][1].text.title()
-      state = root[0][2].text
-      conn = get_db_connection()
-      cur = conn.cursor()
-      cur.execute('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
-            'VALUES (%s, %s, %s, %s, %s, %s)',
-            (firstName, lastName, address, city, state, zipcode))
-      conn.commit()
-      cur.close()
-      release_db_connection(conn)
+  
+    USPS_ID = os.environ.get('USPS_ID')
+    firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(request.json)
+    # Build xml to use with API
+    root = ET.Element('CityStateLookupRequest')
+    root.set('USERID', USPS_ID)
+    zipCode = ET.SubElement(root, 'ZipCode')
+    zipCode.set('ID', '0')
+    zip5 = ET.SubElement(zipCode, 'Zip5')
+    zip5.text = zipcode
+    xml_string = ET.tostring(root).decode()
+    
+    USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xml_string}'
+    response = requests.post(url = USPS_URL)
+    root = ET.fromstring(response.content)
+    if root[0][0].tag == 'Error':
+      return 'Request Failed', 400
+    city = root[0][1].text.title()
+    state = root[0][2].text
+    conn = get_db_connection()
+    cur = conn.cursor()
+    # Convert the SQL query and values into a string
+    query = cur.mogrify('INSERT INTO addresses (first_name, last_name, address, city, state, zip)'
+    'VALUES (%s, %s, %s, %s, %s, %s)',
+    (firstName, lastName, address, city, state, zipcode))
+    # Execute the query
+    cur.execute(query)
+    conn.commit()
+    cur.close()
+    release_db_connection(conn)
     return 'Success'
 
 
@@ -83,8 +85,9 @@ def deleteEntry():
   id = req_body['id']
   conn = get_db_connection()
   cur = conn.cursor()
-  cur.execute('DELETE FROM addresses WHERE id = %s;',
+  query = cur.mogrify('DELETE FROM addresses WHERE id = %s;',
             [id])
+  cur.execute(query)
   conn.commit()
   cur.close()
   release_db_connection(conn)
@@ -96,8 +99,9 @@ def editEntry():
     firstName, lastName, address, zipcode, city, state, id = itemgetter('firstName', 'lastName', 'address', 'zipcode', 'city', 'state', 'id')(req_body)
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('UPDATE addresses SET first_name = %s, last_name =%s, address =%s, city =%s, state =%s, zip =%s WHERE id = %s;',
+    query = cur.mogrify('UPDATE addresses SET first_name = %s, last_name =%s, address =%s, city =%s, state =%s, zip =%s WHERE id = %s;',
             (firstName, lastName, address, city, state, zipcode, id))
+    cur.execute(query)
     conn.commit()
     cur.close()
     release_db_connection(conn)
