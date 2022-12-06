@@ -47,20 +47,19 @@ def index():
 def addUser():
     if request.method == 'POST':
       USPS_ID = os.environ.get('USPS_ID')
-      req_body = request.json
-      firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)
-      # xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'
+      firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(request.json)
 
       # Build xml to use with API
+
       root = ET.Element('CityStateLookupRequest')
       root.set('USERID', USPS_ID)
       zipCode = ET.SubElement(root, 'ZipCode')
       zipCode.set('ID', '0')
       zip5 = ET.SubElement(zipCode, 'Zip5')
       zip5.text = zipcode
-      xmlString = ET.tostring(root).decode()
+      xml_string = ET.tostring(root).decode()
       
-      USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xmlString}'
+      USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xml_string}'
       response = requests.post(url = USPS_URL)
       root = ET.fromstring(response.content)
       if root[0][0].tag == 'Error':
