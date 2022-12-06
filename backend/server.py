@@ -1,5 +1,6 @@
 import os
 import psycopg2
+from psycopg2.pool import ThreadedConnectionPool
 import psycopg2.extras
 import requests
 from flask import Flask, request
@@ -8,13 +9,23 @@ import xml.etree.ElementTree as ET
 from decouple import config
 
 app = Flask(__name__)
+pool = None
 
 def get_db_connection():
-    conn = psycopg2.connect(host='localhost',
-                            database='address',
-                            user=os.environ.get('PG_USERNAME'),
-                            password=os.environ.get('PG_PASSWORD'))
-    return conn
+  global pool
+
+  if not pool:
+    pool = ThreadedConnectionPool(2, 5, host='localhost',
+                                  database='address',
+                                  user=os.environ.get('PG_USERNAME'),
+                                  password=os.environ.get('PG_PASSWORD'))
+
+  return pool.getconn()
+
+# When you are done with the connection, return it to the pool
+def release_db_connection(conn):
+  global pool
+  pool.putconn(conn)
 
 @app.route('/')
 def home():
@@ -29,7 +40,7 @@ def index():
     cur.execute('SELECT * FROM addresses ORDER BY id ASC;')
     addresses = cur.fetchall()
     cur.close()
-    conn.close()
+    release_db_connection(conn)
     return addresses
 
 @app.route('/addUser', methods=['GET', 'POST'])
@@ -38,7 +49,17 @@ def addUser():
       USPS_ID = os.environ.get('USPS_ID')
       req_body = request.json
       firstName, lastName, address, zipcode = itemgetter('firstName', 'lastName', 'address', 'zipcode')(req_body)
-      xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'
+      # xmlString = f'<CityStateLookupRequest USERID=\'{USPS_ID}\'><ZipCode ID=\"0\"><Zip5>{zipcode}</Zip5></ZipCode></CityStateLookupRequest>'
+
+      # Build xml to use with API
+      root = ET.Element('CityStateLookupRequest')
+      root.set('USERID', USPS_ID)
+      zipCode = ET.SubElement(root, 'ZipCode')
+      zipCode.set('ID', '0')
+      zip5 = ET.SubElement(zipCode, 'Zip5')
+      zip5.text = zipcode
+      xmlString = ET.tostring(root).decode()
+      
       USPS_URL = f'https://production.shippingapis.com/ShippingAPI.dll?API= CityStateLookup&XML={xmlString}'
       response = requests.post(url = USPS_URL)
       root = ET.fromstring(response.content)
@@ -53,7 +74,7 @@ def addUser():
             (firstName, lastName, address, city, state, zipcode))
       conn.commit()
       cur.close()
-      conn.close()
+      release_db_connection(conn)
     return 'Success'
 
 
@@ -67,22 +88,20 @@ def deleteEntry():
             [id])
   conn.commit()
   cur.close()
-  conn.close()
-
+  release_db_connection(conn)
   return 'Successfully Deleted'
 
 @app.route('/editEntry', methods=['POST'])
 def editEntry():
     req_body = request.json
     firstName, lastName, address, zipcode, city, state, id = itemgetter('firstName', 'lastName', 'address', 'zipcode', 'city', 'state', 'id')(req_body)
-    print(firstName, lastName, address, zipcode, city, state)
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('UPDATE addresses SET first_name = %s, last_name =%s, address =%s, city =%s, state =%s, zip =%s WHERE id = %s;',
             (firstName, lastName, address, city, state, zipcode, id))
     conn.commit()
     cur.close()
-    conn.close()
+    release_db_connection(conn)
     return 'Successfully Updated'
 
 if __name__ == '__main__':
